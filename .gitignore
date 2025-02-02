@@ -1,6 +1,11 @@
 # Node.js dependencies
 node_modules/
 
+firebaseConfig.js
+
+# Firebase credentials
+src/firebase.js
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
