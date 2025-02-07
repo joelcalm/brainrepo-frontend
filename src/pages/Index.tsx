@@ -21,7 +21,7 @@ const Index = () => {
 
   // Function to call the backend to save/update the playlist data
   const savePlaylist = async (email: string, playlistUrl: string, name: string) => {
-    const response = await fetch("http://localhost:8000/save-playlist", {
+    const response = await fetch("https://api.brainrepo.es/save-playlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,9 +54,9 @@ const Index = () => {
       await savePlaylist(userEmail, playlistUrl, userName);
 
       navigate("/success");
-      
+
       // Immediately trigger processing by calling the /run-cron endpoint
-      const processResponse = await fetch("http://localhost:8000/run-cron");
+      const processResponse = await fetch("https://api.brainrepo.es/run-cron");
       const processResult = await processResponse.json();
       console.log("Process All Result:", processResult);
 
