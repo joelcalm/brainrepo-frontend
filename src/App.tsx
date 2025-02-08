@@ -8,6 +8,7 @@ import NotFound from "@/pages/NotFound";
 import Login2 from "@/pages/Login2";
 import SignUp2 from "@/pages/SignUp2";
 import Success from "@/pages/Success";
+import Plan from "@/pages/Plan";
 
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/plan" element={<Plan />} />
+
 
       {/* Our new special routes */}
       <Route path="/login2" element={<Login2 />} />

@@ -34,7 +34,6 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "consent" });
       await signInWithPopup(firebaseAuth, provider);
       navigate("/");
     } catch (error: any) {

@@ -21,7 +21,7 @@ const Index = () => {
 
   // Function to call the backend to save/update the playlist data
   const savePlaylist = async (email: string, playlistUrl: string, name: string) => {
-    const response = await fetch("https://api.brainrepo.es/save-playlist", {
+    const response = await fetch("http://localhost:8000/save-playlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const Index = () => {
       navigate("/success");
 
       // Immediately trigger processing by calling the /run-cron endpoint
-      const processResponse = await fetch("https://api.brainrepo.es/run-cron");
+      const processResponse = await fetch("http://localhost:8000/run-cron"); //http://localhost:8000, https://api.brainrepo.es
       const processResult = await processResponse.json();
       console.log("Process All Result:", processResult);
 
@@ -92,11 +92,11 @@ const Index = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem
-                onClick={() => navigate("/upgrade")}
+                onClick={() => navigate("/plan")}
                 className="flex items-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
-                <span>Upgrade Plan</span>
+                <span>Plan</span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleLogout}
