@@ -24,7 +24,7 @@ export default function SignUp2() {
 
   // For POST call to your FastAPI with name included
   const savePlaylist = async (userEmail: string, url: string, userName: string) => {
-    const response = await fetch("https://api.brainrepo.es/save-playlist", { //http://localhost:8000 https://api.brainrepo.es
+    const response = await fetch("http://localhost:8000/save-playlist", { //http://localhost:8000 https://api.brainrepo.es
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,10 +51,10 @@ export default function SignUp2() {
       if (playlistUrl) {
         await savePlaylist(userCred.user.email ?? "", playlistUrl, name);
         
-        navigate("/success");
+        navigate("/start");
 
         // Call process_all via the /run-cron endpoint
-        const response = await fetch("https://api.brainrepo.es/run-cron");
+        const response = await fetch("http://localhost:8000/run-cron");
         const result = await response.json();
         console.log("Process All Result:", result);
       }
@@ -77,10 +77,10 @@ export default function SignUp2() {
       if (playlistUrl) {
         await savePlaylist(userCred.user.email ?? "", playlistUrl, userName);
         
-        navigate("/success");
+        navigate("/start");
 
         // Call process_all via the /run-cron endpoint
-        const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000 https://api.brainrepo.es
+        const response = await fetch("http://localhost:8000/run-cron"); //http://localhost:8000 https://api.brainrepo.es
         const result = await response.json();
         console.log("Process All Result:", result);
       }

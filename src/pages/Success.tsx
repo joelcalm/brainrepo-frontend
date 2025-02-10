@@ -1,35 +1,43 @@
 // src/pages/Success.tsx
 import React from "react";
-import { motion } from "framer-motion";
+import { CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Success: React.FC = () => {
+export default function Success() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient">
-
-      {/* Main Content */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-lg mx-auto bg-white/50 p-8 rounded-lg shadow-lg text-center"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            All Set Up!
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Every time you add a new video to your playlist, you will receive the summary to your inbox.
-          </p>
-          <div className="mt-8">
-            <Link to="/" className="button-primary whitespace-nowrap">
-              Back to Home
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white/80 rounded-xl shadow-lg p-8 text-center">
+        <div className="flex flex-col items-center mb-6">
+          <div className="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+            <CheckCircle className="w-8 h-8" />
           </div>
-        </motion.div>
-      </section>
+          <h1 className="text-3xl font-bold text-gray-800">Payment Successful!</h1>
+          <p className="text-gray-600 mt-2">
+            Thank you for your purchase. Your plan has been upgraded successfully.
+          </p>
+        </div>
+
+        <p className="text-sm text-gray-600 mb-8">
+          Your credits have been updated. You can now enjoy more summaries and stay ahead!
+        </p>
+
+        <div className="space-y-3 sm:space-x-3 sm:space-y-0 sm:flex sm:justify-center">
+          <Link
+            to="/plan"
+            className="button-primary inline-block px-6 py-2 rounded-md shadow text-white 
+                       bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700"
+          >
+            View Your Plan
+          </Link>
+          <Link
+            to="/"
+            className="inline-block px-6 py-2 rounded-md border border-gray-300 text-gray-700 
+                       hover:bg-gray-50 transition-colors"
+          >
+            Go to Homepage
+          </Link>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Success;
+}

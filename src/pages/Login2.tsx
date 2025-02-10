@@ -28,10 +28,10 @@ const handleLogin = async (e: React.FormEvent) => {
       // Attempt login with email and password
       await signInWithEmailAndPassword(firebaseAuth, email, password);
 
-      navigate("/success");
+      navigate("/start");
 
     // Call process_all via the /run-cron endpoint
-    const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000, https://api.brainrepo.esv
+    const response = await fetch("http://localhost:8000/run-cron"); //http://localhost:8000, https://api.brainrepo.esv
     const result = await response.json();
     console.log("Process All Result:", result);
 
@@ -48,10 +48,10 @@ const handleLogin = async (e: React.FormEvent) => {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(firebaseAuth, provider);
 
-      navigate("/success");
+      navigate("/start");
 
       // Call process_all via the /run-cron endpoint
-      const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000, https://api.brainrepo.es
+      const response = await fetch("http://localhost:8000/run-cron"); //http://localhost:8000, https://api.brainrepo.es
       const result = await response.json();
       console.log("Process All Result:", result);
 

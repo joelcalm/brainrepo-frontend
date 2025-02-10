@@ -7,8 +7,9 @@ import SignUp from "@/pages/SignUp";
 import NotFound from "@/pages/NotFound";
 import Login2 from "@/pages/Login2";
 import SignUp2 from "@/pages/SignUp2";
-import Success from "@/pages/Success";
+import Start from "@/pages/Start";
 import Plan from "@/pages/Plan";
+import Success from "@/pages/Success";
 
 
 function App() {
@@ -18,13 +19,14 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/plan" element={<Plan />} />
+      <Route path="/success" element={<Success />} />
 
 
       {/* Our new special routes */}
       <Route path="/login2" element={<Login2 />} />
       <Route path="/signup2" element={<SignUp2 />} />
 
-      <Route path="/success" element={<Success />} />
+      <Route path="/start" element={<Start />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
 

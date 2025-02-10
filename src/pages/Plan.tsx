@@ -1,5 +1,5 @@
 // src/pages/Plan.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { CheckIcon } from "@heroicons/react/20/solid";
@@ -11,8 +11,8 @@ function classNames(...classes: string[]) {
 
 export default function Plan() {
   const { user } = useAuth();
-  const currentPlan = "Free";
-  const remainingCredits = 10;
+  const [currentPlan, setCurrentPlan] = useState("Free");
+  const [remainingCredits, setRemainingCredits] = useState(5);
 
   // Define your plan tiers
   const tiers = [
@@ -32,6 +32,25 @@ export default function Plan() {
       featured: false,
     },
   ];
+
+  useEffect(() => {
+    if (user && user.email) {
+      fetch(`http://localhost:8000/user-info?email=${user.email}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch user info");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          // Capitalize the plan name (if available) or default to "Free"
+          const planName = data.plan ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1) : "Free";
+          setCurrentPlan(planName);
+          setRemainingCredits(data.credits);
+        })
+        .catch((err) => console.error("Error fetching user info:", err));
+    }
+  }, [user]);
 
   // Handle checkout with Stripe: call your backend API to create a checkout session.
   const handleCheckout = async (planId: string) => {

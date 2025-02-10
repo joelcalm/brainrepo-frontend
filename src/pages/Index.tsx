@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+//watch, learn, remember, repeat
+
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Index = () => {
 
   // Function to call the backend to save/update the playlist data
   const savePlaylist = async (email: string, playlistUrl: string, name: string) => {
-    const response = await fetch("https://api.brainrepo.es/save-playlist", {
+    const response = await fetch("http://localhost:8000/save-playlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,16 +55,15 @@ const Index = () => {
       // Save/update the playlist info in Firestore via the backend
       await savePlaylist(userEmail, playlistUrl, userName);
 
-      navigate("/success");
+      navigate("/start");
 
       // Immediately trigger processing by calling the /run-cron endpoint
-      const processResponse = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000, https://api.brainrepo.es
+      const processResponse = await fetch("http://localhost:8000/run-cron");
       const processResult = await processResponse.json();
       console.log("Process All Result:", processResult);
 
       alert("Playlist submitted and processed successfully!");
       setPlaylistUrl("");
-      
     } catch (error) {
       console.error("Error adding playlist:", error);
       alert("There was an error submitting your playlist. Please try again.");
@@ -127,12 +128,29 @@ const Index = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Get Video Summaries Straight to Your Inbox
+          <h1
+            className="
+              text-4xl 
+              md:text-5xl 
+              font-bold 
+              font-heading 
+              leading-[1.3] 
+              bg-gradient-to-r 
+              from-primary 
+              to-secondary 
+              bg-clip-text 
+              text-transparent
+            "
+          >
+            Stop Forgetting What You Watch
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground">
-            Transform your YouTube playlists into concise, actionable summaries
+
+          <p className="mt-6 text-lg text-muted-foreground font-heading leading-[1.4]">
+            You consume tons of videos, but how much do you actually <strong>retain</strong>?
+            <br />
+            Get <strong>concise</strong>, <strong>insightful summaries</strong> of every video you want straight to your inbox.
           </p>
+
 
           {/* Steps */}
           <div className="mt-12 grid gap-8 md:grid-cols-3">
@@ -162,7 +180,7 @@ const Index = () => {
                 type="url"
                 value={playlistUrl}
                 onChange={(e) => setPlaylistUrl(e.target.value)}
-                placeholder="Paste your YouTube playlist URL here"
+                placeholder="Enter your YouTube playlist URL to begin"
                 className="input-field flex-1"
                 required
               />
@@ -184,18 +202,18 @@ const Index = () => {
 const steps = [
   {
     icon: Brain,
-    title: "1. Choose Your Playlist",
-    description: "Paste the URL of any YouTube playlist you want to learn from",
+    title: "1. Create Your YouTube Playlist",
+    description: "Make a YouTube playlist (public or hidden) and paste the URL.",
   },
   {
     icon: Mail,
-    title: "2. Get Summaries",
-    description: "Receive email summaries for each video in your playlist",
+    title: "2. Add Videos, We Take Notes",
+    description: "Every new video you add is automatically summarized",
   },
   {
     icon: ArrowRight,
-    title: "3. Stay Updated",
-    description: "Get automatic summaries when new videos are added",
+    title: "3. Get Key Insights & Takeaways",
+    description: "Receive detailed, structured summaries in your inbox",
   },
 ];
 
