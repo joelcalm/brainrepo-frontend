@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Layout from "@/components/ui/Layout"; 
 
 //watch, learn, remember, repeat
 
@@ -23,7 +24,7 @@ const Index = () => {
 
   // Function to call the backend to save/update the playlist data
   const savePlaylist = async (email: string, playlistUrl: string, name: string) => {
-    const response = await fetch("http://localhost:8000/save-playlist", {
+    const response = await fetch("https://api.brainrepo.es/save-playlist", { //http://localhost:8000, https://api.brainrepo.es
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +59,7 @@ const Index = () => {
       navigate("/start");
 
       // Immediately trigger processing by calling the /run-cron endpoint
-      const processResponse = await fetch("http://localhost:8000/run-cron");
+      const processResponse = await fetch("https://api.brainrepo.es/run-cron");
       const processResult = await processResponse.json();
       console.log("Process All Result:", processResult);
 
@@ -82,7 +83,8 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient">
+    <Layout>
+    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%]">
       {/* Header */}
       <header className="container mx-auto px-4 py-4 flex justify-end items-center gap-4">
         {user ? (
@@ -128,21 +130,9 @@ const Index = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <h1
-            className="
-              text-4xl 
-              md:text-5xl 
-              font-bold 
-              font-heading 
-              leading-[1.3] 
-              bg-gradient-to-r 
-              from-primary 
-              to-secondary 
-              bg-clip-text 
-              text-transparent
-            "
-          >
-            Stop Forgetting What You Watch
+          {/* The main title now uses the custom .title class */}
+          <h1 className="title">
+            <strong>Stop Forgetting What You Watch</strong>
           </h1>
 
           <p className="mt-6 text-lg text-muted-foreground font-heading leading-[1.4]">
@@ -150,7 +140,6 @@ const Index = () => {
             <br />
             Get <strong>concise</strong>, <strong>insightful summaries</strong> of every video you want straight to your inbox.
           </p>
-
 
           {/* Steps */}
           <div className="mt-12 grid gap-8 md:grid-cols-3">
@@ -196,6 +185,7 @@ const Index = () => {
         </motion.div>
       </section>
     </div>
+    </Layout>
   );
 };
 

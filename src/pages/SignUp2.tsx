@@ -54,7 +54,7 @@ export default function SignUp2() {
         navigate("/start");
 
         // Call process_all via the /run-cron endpoint
-        const response = await fetch("http://localhost:8000/run-cron");
+        const response = await fetch("https://api.brainrepo.es/run-cron");
         const result = await response.json();
         console.log("Process All Result:", result);
       }
@@ -80,7 +80,7 @@ export default function SignUp2() {
         navigate("/start");
 
         // Call process_all via the /run-cron endpoint
-        const response = await fetch("http://localhost:8000/run-cron"); //http://localhost:8000 https://api.brainrepo.es
+        const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000 https://api.brainrepo.es
         const result = await response.json();
         console.log("Process All Result:", result);
       }

@@ -1,6 +1,5 @@
 // src/pages/Plan.tsx
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@/contexts/AuthContext";
@@ -22,7 +21,7 @@ export default function Plan() {
       priceMonthly: "9€",
       description: "Get 30 summaries per month",
       features: ["30 summaries per month"],
-      featured: true, // Pro is the featured (main) plan
+      featured: true, // Pro is featured, container remains black
     },
     {
       name: "Legend",
@@ -43,8 +42,10 @@ export default function Plan() {
           return res.json();
         })
         .then((data) => {
-          // Capitalize the plan name (if available) or default to "Free"
-          const planName = data.plan ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1) : "Free";
+          // Capitalize plan name if available, otherwise default to "Free"
+          const planName = data.plan
+            ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1)
+            : "Free";
           setCurrentPlan(planName);
           setRemainingCredits(data.credits);
         })
@@ -52,13 +53,12 @@ export default function Plan() {
     }
   }, [user]);
 
-  // Handle checkout with Stripe: call your backend API to create a checkout session.
+  // Handle checkout by calling your backend API to create a checkout session.
   const handleCheckout = async (planId: string) => {
     if (!user) {
       alert("Please log in first!");
       return;
     }
-
     try {
       const response = await fetch("http://localhost:8000/create-checkout-session", {
         method: "POST",
@@ -72,7 +72,7 @@ export default function Plan() {
         throw new Error("Failed to create checkout session");
       }
       const data = await response.json();
-      // Redirect the user to Stripe Checkout
+      // Redirect the user to the checkout session URL.
       window.location.href = data.url;
     } catch (err) {
       console.error(err);
@@ -81,7 +81,8 @@ export default function Plan() {
   };
 
   return (
-    <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    // Outer container using the moving gradient background with extended size.
+    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%] relative isolate px-6 py-24 sm:py-32 lg:px-8">
       {/* Return to Home Button */}
       <Link
         to="/"
@@ -90,21 +91,7 @@ export default function Plan() {
         &larr; Home
       </Link>
 
-      {/* Background Effect */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl"
-      >
-        <div
-          style={{
-            clipPath:
-              "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-          }}
-          className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
-        />
-      </div>
-
-      {/* Header: Current Plan and Credits Remaining */}
+      {/* Header: Current Plan & Credits */}
       <div className="mx-auto max-w-4xl text-center">
         <h2 className="text-lg font-semibold text-indigo-600">
           Current Plan: <span className="text-gray-900">{currentPlan}</span>
@@ -112,9 +99,10 @@ export default function Plan() {
         <p className="mt-2 text-xl font-medium text-gray-900">
           Credits Remaining: <span className="font-bold">{remainingCredits}</span>
         </p>
-        <p className="mt-6 text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl">
+        {/* Main heading using the custom .title utility */}
+        <h1 className="mt-6 title">
           Upgrade Your Plan
-        </p>
+        </h1>
       </div>
       <p className="mx-auto mt-4 max-w-2xl text-center text-lg font-medium text-gray-600">
         Choose a plan that fits your needs and unlock more features.
@@ -196,7 +184,7 @@ export default function Plan() {
             </ul>
             <button
               onClick={() => handleCheckout(tier.id)}
-              className="mt-8 block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white hover:bg-indigo-500"
+              className="mt-8 block w-full rounded-md button-primary whitespace-nowrap text-center text-sm font-semibold text-white hover:bg-indigo-500"
             >
               Upgrade to {tier.name}
             </button>
