@@ -13,6 +13,17 @@ export default function Plan() {
   const [currentPlan, setCurrentPlan] = useState("Free");
   const [remainingCredits, setRemainingCredits] = useState(5);
 
+  useEffect(() => {
+    if (!user?.email) return;
+    fetch("/user-info?email=" + user.email)
+      .then((res) => res.json())
+      .then((data) => {
+        setCurrentPlan(data.plan ?? "Free");
+        setRemainingCredits(data.credits ?? 0);
+      })
+      .catch(console.error);
+  }, [user]);
+
   // Define your plan tiers
   const tiers = [
     {
