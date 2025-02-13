@@ -13,17 +13,6 @@ export default function Plan() {
   const [currentPlan, setCurrentPlan] = useState("Free");
   const [remainingCredits, setRemainingCredits] = useState(5);
 
-  useEffect(() => {
-    if (!user?.email) return;
-    fetch("/user-info?email=" + user.email)
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentPlan(data.plan ?? "Free");
-        setRemainingCredits(data.credits ?? 0);
-      })
-      .catch(console.error);
-  }, [user]);
-
   // Define your plan tiers
   const tiers = [
     {
@@ -45,7 +34,7 @@ export default function Plan() {
 
   useEffect(() => {
     if (user && user.email) {
-      fetch(`http://localhost:8000/user-info?email=${user.email}`)
+      fetch(`https://api.brainrepo.es/user-info?email=${user.email}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Failed to fetch user info");
@@ -71,7 +60,7 @@ export default function Plan() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:8000/create-checkout-session", {
+      const response = await fetch("https://api.brainrepo.es/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
