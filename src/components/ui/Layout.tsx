@@ -1,5 +1,6 @@
 // src/components/ui/Layout.tsx
 import React, { FC, ReactNode } from "react";
+import Footer from "./Footer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,6 +25,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
       {/* Page Content */}
       {children}
+      {/* Footer */}
+      <Footer />
+
     </div>
   );
 };

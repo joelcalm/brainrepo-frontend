@@ -10,6 +10,10 @@ import SignUp2 from "@/pages/SignUp2";
 import Start from "@/pages/Start";
 import Plan from "@/pages/Plan";
 import Success from "@/pages/Success";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import CookiesPolicy from "@/pages/CookiesPolicy";
+import GeneralConditions from "@/pages/GeneralConditions";
+import LegalNotice from "@/pages/LegalNotice";
 
 
 function App() {
@@ -28,6 +32,13 @@ function App() {
 
       <Route path="/start" element={<Start />} />
       <Route path="*" element={<NotFound />} />
+
+      {/* Legal Pages */}
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/cookies-policy" element={<CookiesPolicy />} />
+      <Route path="/general-conditions" element={<GeneralConditions />} />
+      <Route path="/legal-notice" element={<LegalNotice />} />
+
     </Routes>
 
   );
