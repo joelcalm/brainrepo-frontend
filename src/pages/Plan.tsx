@@ -22,6 +22,7 @@ export default function Plan() {
       description: "Get 30 summaries per month",
       features: ["30 summaries per month"],
       featured: true, // Pro is featured, container remains black
+      paymentLink: "https://buy.stripe.com/eVaaIafyhckogeY3cc",
     },
     {
       name: "Legend",
@@ -29,6 +30,7 @@ export default function Plan() {
       priceMonthly: "19€",
       features: ["Unlimited summaries"],
       featured: false,
+      paymentLink: "https://buy.stripe.com/28o17Aeud98ce6QaEF",
     },
   ];
 
@@ -42,7 +44,6 @@ export default function Plan() {
           return res.json();
         })
         .then((data) => {
-          // Capitalize plan name if available, otherwise default to "Free"
           const planName = data.plan
             ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1)
             : "Free";
@@ -53,35 +54,16 @@ export default function Plan() {
     }
   }, [user]);
 
-  // Handle checkout by calling your backend API to create a checkout session.
-  const handleCheckout = async (planId: string) => {
+  // Instead of calling your backend, redirect directly to the Payment Link.
+  const handlePaymentLinkRedirect = (paymentLink: string) => {
     if (!user) {
       alert("Please log in first!");
       return;
     }
-    try {
-      const response = await fetch("https://api.brainrepo.es/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          planId: planId,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-      const data = await response.json();
-      // Redirect the user to the checkout session URL.
-      window.location.href = data.url;
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong creating the checkout session.");
-    }
+    window.location.href = paymentLink;
   };
 
   return (
-    // Outer container using the moving gradient background with extended size.
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%] relative isolate px-6 py-24 sm:py-32 lg:px-8">
       {/* Return to Home Button */}
       <Link
@@ -99,10 +81,7 @@ export default function Plan() {
         <p className="mt-2 text-xl font-medium text-gray-900">
           Credits Remaining: <span className="font-bold">{remainingCredits}</span>
         </p>
-        {/* Main heading using the custom .title utility */}
-        <h1 className="mt-6 title">
-          Upgrade Your Plan
-        </h1>
+        <h1 className="mt-6 title">Upgrade Your Plan</h1>
       </div>
       <p className="mx-auto mt-4 max-w-2xl text-center text-lg font-medium text-gray-600">
         Choose a plan that fits your needs and unlock more features.
@@ -152,7 +131,8 @@ export default function Plan() {
                 /month
               </span>
             </p>
-            {tier.description && (
+            {/* Only show description for non-Pro plans */}
+            {tier.description && tier.id !== "pro" && (
               <p
                 className={classNames(
                   tier.featured ? "text-gray-300" : "text-gray-600",
@@ -183,7 +163,7 @@ export default function Plan() {
               ))}
             </ul>
             <button
-              onClick={() => handleCheckout(tier.id)}
+              onClick={() => handlePaymentLinkRedirect(tier.paymentLink)}
               className="mt-8 block w-full rounded-md button-primary whitespace-nowrap text-center text-sm font-semibold text-white hover:bg-indigo-500"
             >
               Upgrade to {tier.name}
