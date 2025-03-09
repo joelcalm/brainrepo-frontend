@@ -11,9 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Layout from "@/components/ui/Layout"; 
-
-//watch, learn, remember, repeat
+import Layout from "@/components/ui/Layout";
 
 const Index = () => {
   const { user } = useAuth();
@@ -24,7 +22,7 @@ const Index = () => {
 
   // Function to call the backend to save/update the playlist data
   const savePlaylist = async (email: string, playlistUrl: string, name: string) => {
-    const response = await fetch("https://api.brainrepo.es/save-playlist", { //http://localhost:8000, https://api.brainrepo.es
+    const response = await fetch("https://api.brainrepo.es/save-playlist", { //http://localhost:8000/save-playlist
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,17 +54,12 @@ const Index = () => {
       // Save/update the playlist info in Firestore via the backend
       await savePlaylist(userEmail, playlistUrl, userName);
 
+      // Now that we've saved the playlist, navigate to /start
       navigate("/start");
-
-      // Immediately trigger processing by calling the /run-cron endpoint
-      const processResponse = await fetch("https://api.brainrepo.es/run-cron");
-      const processResult = await processResponse.json();
-      console.log("Process All Result:", processResult);
-
-      alert("Playlist submitted and processed successfully!");
+      alert("Playlist submitted successfully!");
       setPlaylistUrl("");
     } catch (error) {
-      console.error("Error adding playlist:", error);
+      console.error("Error saving playlist:", error);
       alert("There was an error submitting your playlist. Please try again.");
     } finally {
       setLoading(false);
@@ -84,107 +77,108 @@ const Index = () => {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%]">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-4 flex justify-end items-center gap-4">
-        {user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors">
-              <User className="w-4 h-4" />
-              <span className="hidden sm:inline">{user.email}</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem
-                onClick={() => navigate("/plan")}
-                className="flex items-center gap-2"
-              >
-                <CreditCard className="w-4 h-4" />
-                <span>Plan</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleLogout}
-                className="flex items-center gap-2 text-red-600"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <>
-            <Link to="/login" className="text-sm font-medium hover:text-primary">
-              Log in
-            </Link>
-            <Link to="/signup" className="button-primary text-sm">
-              Sign up
-            </Link>
-          </>
-        )}
-      </header>
+      <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%]">
+        {/* Header */}
+        <header className="container mx-auto px-4 py-4 flex justify-end items-center gap-4">
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors">
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline">{user.email}</span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem
+                  onClick={() => navigate("/plan")}
+                  className="flex items-center gap-2"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span>Plan</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 text-red-600"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-medium hover:text-primary">
+                Log in
+              </Link>
+              <Link to="/signup" className="button-primary text-sm">
+                Sign up
+              </Link>
+            </>
+          )}
+        </header>
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          {/* The main title now uses the custom .title class */}
-          <h1 className="title">
-            <strong>Stop Forgetting What You Watch</strong>
-          </h1>
+        {/* Hero Section */}
+        <section className="container mx-auto px-4 py-12 md:py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h1 className="title">
+              <strong>Stop Forgetting What You Watch</strong>
+            </h1>
 
-          <p className="mt-6 text-lg text-muted-foreground font-heading leading-[1.4]">
-            You consume tons of videos, but how much do you actually <strong>retain</strong>?
-            <br />
-            Get <strong>concise</strong>, <strong>insightful summaries</strong> of every video you want straight to your inbox.
-          </p>
+            <p className="mt-6 text-lg text-muted-foreground font-heading leading-[1.4]">
+              You consume tons of videos, but how much do you actually <strong>retain</strong>?
+              <br />
+              Get <strong>concise</strong>, <strong>insightful summaries</strong> of every video you want straight to your inbox.
+            </p>
 
-          {/* Steps */}
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="flex flex-col items-center gap-4"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <step.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Playlist Input Form */}
-          <form onSubmit={handlePlaylistSubmit} className="mt-12">
-            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-              <input
-                type="url"
-                value={playlistUrl}
-                onChange={(e) => setPlaylistUrl(e.target.value)}
-                placeholder="Enter your YouTube playlist URL to begin"
-                className="input-field flex-1"
-                required
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="button-primary whitespace-nowrap"
-              >
-                {loading ? "Processing..." : "Get Summaries"}
-              </button>
+            {/* Steps */}
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="flex flex-col items-center gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <step.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          </form>
-        </motion.div>
-      </section>
-    </div>
+
+            {/* Playlist Input Form */}
+            <form onSubmit={handlePlaylistSubmit} className="mt-12">
+              <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+                <input
+                  type="url"
+                  value={playlistUrl}
+                  onChange={(e) => setPlaylistUrl(e.target.value)}
+                  placeholder="Enter your YouTube playlist URL to begin"
+                  className="input-field flex-1"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="button-primary whitespace-nowrap"
+                >
+                  {loading ? "Processing..." : "Get Summaries"}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </section>
+      </div>
     </Layout>
   );
 };

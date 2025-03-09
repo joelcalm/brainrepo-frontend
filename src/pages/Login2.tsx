@@ -13,28 +13,50 @@ import { firebaseAuth } from "@/integrations/firebase/client";
 const Login2 = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // Although you might receive a playlistUrl from state, it is no longer needed
-  // to update user data on login since it was already stored.
+
+  // If the user first entered a playlist URL on the homepage,
+  // it will be passed here via location.state
   const playlistUrl = location.state?.playlistUrl || "";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-const handleLogin = async (e: React.FormEvent) => {
+  // Helper function to call /save-playlist
+  const savePlaylist = async (userEmail: string, url: string, userName: string) => {
+    const response = await fetch("https://api.brainrepo.es/save-playlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        playlistUrl: url,
+        name: userName,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to save playlist. Status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("save-playlist response:", data);
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Attempt login with email and password
-      await signInWithEmailAndPassword(firebaseAuth, email, password);
+      // Sign in with email and password
+      const userCred = await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const currentUser = userCred.user;
+      if (playlistUrl) {
+        // If user entered a new playlist URL on the homepage, update it in Firestore
+        const userName = currentUser.displayName || "Anonymous";
+        await savePlaylist(currentUser.email ?? "", playlistUrl, userName);
+      }
 
+      // Redirect to the start page after login
       navigate("/start");
-
-    // Call process_all via the /run-cron endpoint
-    const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000, https://api.brainrepo.es
-    const result = await response.json();
-    console.log("Process All Result:", result);
-
     } catch (error: any) {
       console.error("Login error:", error);
       alert("Login failed: " + error.message);
@@ -45,18 +67,23 @@ const handleLogin = async (e: React.FormEvent) => {
 
   const handleGoogleSignIn = async () => {
     try {
+      setLoading(true);
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(firebaseAuth, provider);
+      // signInWithPopup resolves with user info
+      const userCred = await signInWithPopup(firebaseAuth, provider);
+      const currentUser = userCred.user;
+      if (playlistUrl) {
+        const userName = currentUser.displayName || "Anonymous";
+        await savePlaylist(currentUser.email ?? "", playlistUrl, userName);
+      }
 
+      // Redirect to the start page after login
       navigate("/start");
-
-      // Call process_all via the /run-cron endpoint
-      const response = await fetch("https://api.brainrepo.es/run-cron"); //http://localhost:8000, https://api.brainrepo.es
-      const result = await response.json();
-      console.log("Process All Result:", result);
-
     } catch (error: any) {
       alert("Google sign-in error: " + error.message);
+      console.error("Google sign-in error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,15 +143,19 @@ const handleLogin = async (e: React.FormEvent) => {
                 <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={handleGoogleSignIn}
+              disabled={loading}
               className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors mt-4"
             >
+              {/* Google Icon */}
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 
@@ -154,7 +185,7 @@ const handleLogin = async (e: React.FormEvent) => {
           </form>
 
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               to="/signup2"
               state={{ playlistUrl }}
