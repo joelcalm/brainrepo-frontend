@@ -144,7 +144,7 @@ export default function SignUp2() {
               className="button-primary w-full"
               disabled={loading}
             >
-              {loading ? "Creating account..." : "Sign up & Get Summaries"}
+              {loading ? "Creating account..." : "Sign up"}
             </button>
 
             <div className="relative">

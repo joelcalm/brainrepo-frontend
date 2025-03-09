@@ -135,7 +135,7 @@ const Login2 = () => {
               disabled={loading}
               className="button-primary w-full"
             >
-              {loading ? "Logging in..." : "Log in & Get Summaries"}
+              {loading ? "Logging in..." : "Log in"}
             </button>
 
             <div className="relative mt-4">

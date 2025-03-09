@@ -13,27 +13,7 @@ export default function Plan() {
   const [currentPlan, setCurrentPlan] = useState("Free");
   const [remainingCredits, setRemainingCredits] = useState(5);
 
-  // Define your plan tiers
-  const tiers = [
-    {
-      name: "Pro",
-      id: "pro",
-      priceMonthly: "9€",
-      description: "Get 30 summaries per month",
-      features: ["30 summaries per month"],
-      featured: true, // Pro is featured, container remains black
-      paymentLink: "https://buy.stripe.com/eVaaIafyhckogeY3cc",
-    },
-    {
-      name: "Legend",
-      id: "legend",
-      priceMonthly: "19€",
-      features: ["Unlimited summaries"],
-      featured: false,
-      paymentLink: "https://buy.stripe.com/28o17Aeud98ce6QaEF",
-    },
-  ];
-
+  // The rest of your code for fetching user info...
   useEffect(() => {
     if (user && user.email) {
       fetch(`https://api.brainrepo.es/user-info?email=${user.email}`)
@@ -54,7 +34,7 @@ export default function Plan() {
     }
   }, [user]);
 
-  // Instead of calling your backend, redirect directly to the Payment Link.
+  // Upgrade button just does a redirect to Payment Link
   const handlePaymentLinkRedirect = (paymentLink: string) => {
     if (!user) {
       alert("Please log in first!");
@@ -63,9 +43,60 @@ export default function Plan() {
     window.location.href = paymentLink;
   };
 
+  // 1) This function hits our new backend route /create-portal-session
+  // 2) If successful, we redirect to the returned URL
+  const handleManageSubscription = async () => {
+    if (!user?.email) {
+      alert("You need to be logged in first!");
+      return;
+    }
+    try {
+      const response = await fetch("https://api.brainrepo.es/create-portal-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: user.email }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.detail || "Failed to create portal session");
+      }
+
+      const data = await response.json();
+      // data.url is the portal session link
+      window.location.href = data.url;
+    } catch (err: any) {
+      alert(`Error: ${err.message}`);
+      console.error("Error creating portal session:", err);
+    }
+  };
+
+  // Define your plan tiers
+  const tiers = [
+    {
+      name: "Pro",
+      id: "pro",
+      priceMonthly: "9€",
+      description: "Get 30 summaries per month",
+      features: ["30 summaries per month"],
+      featured: true,
+      paymentLink: "https://buy.stripe.com/eVaaIafyhckogeY3cc",
+    },
+    {
+      name: "Legend",
+      id: "legend",
+      priceMonthly: "19€",
+      description: "",
+      features: ["Unlimited summaries"],
+      featured: false,
+      paymentLink: "https://buy.stripe.com/28o17Aeud98ce6QaEF",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%] relative isolate px-6 py-24 sm:py-32 lg:px-8">
-      {/* Return to Home Button */}
       <Link
         to="/"
         className="absolute top-4 left-4 text-indigo-600 font-semibold hover:text-indigo-800"
@@ -73,7 +104,6 @@ export default function Plan() {
         &larr; Home
       </Link>
 
-      {/* Header: Current Plan & Credits */}
       <div className="mx-auto max-w-4xl text-center">
         <h2 className="text-lg font-semibold text-indigo-600">
           Current Plan: <span className="text-gray-900">{currentPlan}</span>
@@ -87,7 +117,6 @@ export default function Plan() {
         Choose a plan that fits your needs and unlock more features.
       </p>
 
-      {/* Plan Options */}
       <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
         {tiers.map((tier, tierIdx) => (
           <div
@@ -131,7 +160,7 @@ export default function Plan() {
                 /month
               </span>
             </p>
-            {/* Only show description for non-Pro plans */}
+            {/* Optional "description" for some plans */}
             {tier.description && tier.id !== "pro" && (
               <p
                 className={classNames(
@@ -170,6 +199,16 @@ export default function Plan() {
             </button>
           </div>
         ))}
+      </div>
+
+      {/* Add the Manage Subscription Link */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={handleManageSubscription}
+          className="text-sm text-gray-600 hover:underline"
+        >
+          Manage my subscription
+        </button>
       </div>
     </div>
   );

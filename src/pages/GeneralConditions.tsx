@@ -8,12 +8,12 @@ function GeneralConditions() {
       <h1 className="text-3xl font-bold mb-6">General Conditions</h1>
 
       <p className="mb-4">
-        These General Conditions (the "Terms") govern the access and use of the website and services provided by <strong>BRAIN REPO S.L.</strong> (hereinafter, "the Company"), in accordance with Spanish law. By accessing and/or using this website (<a href="https://brainrepo.es" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">brainrepo.es</a>), you agree to be bound by these Terms.
+        These General Conditions (the "Terms") govern the access and use of the website and services provided by <strong>BRAIN REPO</strong> (hereinafter, "the Company"), in accordance with Spanish law. By accessing and/or using this website (<a href="https://brainrepo.es" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">brainrepo.es</a>), you agree to be bound by these Terms.
       </p>
 
       <h2 className="text-2xl font-semibold mb-4">1. Identification of the Service Provider</h2>
       <p className="mb-4">
-        The website is operated by <strong>BRAIN REPO S.L.</strong>, a company duly registered under Spanish law, with its registered office at Carrer Godua, Girona 17800. For any inquiries, you may contact us via email at <a href="mailto:help@brainrepo.es" className="text-primary hover:underline">help@brainrepo.es</a>.
+        The website is operated by <strong>BRAIN REPO</strong>, a company duly registered under Spanish law, with its registered office at Carrer Godua, Girona 17800. For any inquiries, you may contact us via email at <a href="mailto:help@brainrepo.es" className="text-primary hover:underline">help@brainrepo.es</a>.
       </p>
 
       <h2 className="text-2xl font-semibold mb-4">2. Scope and Acceptance</h2>
@@ -28,7 +28,7 @@ function GeneralConditions() {
 
       <h2 className="text-2xl font-semibold mb-4">4. Description of Services</h2>
       <p className="mb-4">
-        BRAIN REPO S.L. provides an online platform offering a range of services, including educational tools, software-as-a-service (SaaS) solutions, and other digital resources. The exact nature, features, and functionality of these services may be subject to change as the Company updates its offerings.
+        BRAIN REPO provides an online platform offering a range of services, including educational tools, software-as-a-service (SaaS) solutions, and other digital resources. The exact nature, features, and functionality of these services may be subject to change as the Company updates its offerings.
       </p>
       <p className="mb-4">
         Use of the website and services is subject to these Terms as well as any additional guidelines or rules that may be published on the site.
@@ -52,7 +52,7 @@ function GeneralConditions() {
 
       <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
       <p className="mb-4">
-        All content, trademarks, logos, graphics, and other intellectual property displayed on this website are the property of BRAIN REPO S.L. or its licensors and are protected under applicable intellectual property laws.
+        All content, trademarks, logos, graphics, and other intellectual property displayed on this website are the property of BRAIN REPO or its licensors and are protected under applicable intellectual property laws.
       </p>
       <p className="mb-4">
         No part of this website may be reproduced, distributed, or transmitted without the prior written consent of the Company, except as expressly permitted in these Terms.
@@ -60,7 +60,7 @@ function GeneralConditions() {
 
       <h2 className="text-2xl font-semibold mb-4">7. Limitation of Liability</h2>
       <p className="mb-4">
-        BRAIN REPO S.L. shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from the use or inability to use the website or its services. This includes, but is not limited to, losses for profit, data, or goodwill.
+        BRAIN REPO shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from the use or inability to use the website or its services. This includes, but is not limited to, losses for profit, data, or goodwill.
       </p>
       <p className="mb-4">
         The Company does not guarantee the accuracy, reliability, or completeness of any information on the website and shall not be responsible for any errors or omissions.
@@ -88,7 +88,7 @@ function GeneralConditions() {
 
       <h2 className="text-2xl font-semibold mb-4">12. Force Majeure</h2>
       <p className="mb-4">
-        BRAIN REPO S.L. shall not be liable for any failure or delay in the performance of its obligations under these Terms if such failure or delay is caused by circumstances beyond its reasonable control, including but not limited to acts of God, war, natural disasters, or any other event deemed as force majeure.
+        BRAIN REPO shall not be liable for any failure or delay in the performance of its obligations under these Terms if such failure or delay is caused by circumstances beyond its reasonable control, including but not limited to acts of God, war, natural disasters, or any other event deemed as force majeure.
       </p>
 
       <h2 className="text-2xl font-semibold mb-4">13. Severability</h2>

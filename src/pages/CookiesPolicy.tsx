@@ -11,7 +11,7 @@ function CookiesPolicy() {
       {/* Introduction */}
       <p className="mb-4">
         Welcome to the <strong>COOKIES POLICY</strong> of the website of the entity{" "}
-        <strong>BRAIN REPO S.L.</strong> (registered with CIF B09634809), where we will explain in clear and simple language all the necessary details so that you can maintain control over cookies based on your personal decisions.
+        <strong>BRAIN REPO</strong>, where we will explain in clear and simple language all the necessary details so that you can maintain control over cookies based on your personal decisions.
       </p>
 
       {/* What Are Cookies */}

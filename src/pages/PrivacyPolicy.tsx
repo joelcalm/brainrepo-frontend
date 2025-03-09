@@ -12,7 +12,7 @@ function PrivacyPolicy() {
       </h2>
 
       <p className="mb-4">
-        The Management / Governing Body of <strong>BRAIN REPO S.L.</strong>{" "}
+        The Management / Governing Body of <strong>BRAIN REPO</strong>{" "}
         (hereinafter referred to as the data controller) assumes the highest
         level of responsibility and commitment to establishing, implementing,
         and maintaining this Data Protection Policy, ensuring continuous
@@ -27,7 +27,7 @@ function PrivacyPolicy() {
       </p>
 
       <p className="mb-4">
-        The Data Protection Policy of <strong>BRAIN REPO S.L.</strong> is based
+        The Data Protection Policy of <strong>BRAIN REPO</strong> is based
         on the principle of proactive responsibility, whereby the data
         controller is accountable for compliance with the regulatory and
         jurisprudential framework governing this Policy and is able to
@@ -105,7 +105,7 @@ function PrivacyPolicy() {
       </ol>
 
       <p className="mb-4">
-        The Data Protection Policy of <strong>BRAIN REPO S.L.</strong> is
+        The Data Protection Policy of <strong>BRAIN REPO.</strong> is
         communicated to all personnel of the data controller and made available
         to all interested parties.
       </p>
@@ -122,7 +122,7 @@ function PrivacyPolicy() {
 
       <p className="mb-4">
         This Policy shall be reviewed by the Management / Governing Body of{" "}
-        <strong>BRAIN REPO S.L.</strong> as often as deemed necessary to adapt
+        <strong>BRAIN REPO </strong> as often as deemed necessary to adapt
         it, at all times, to the provisions in force regarding personal data
         protection.
       </p>
