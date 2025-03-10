@@ -79,10 +79,21 @@ const Index = () => {
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 animate-gradient bg-[length:200%_200%]">
         {/* Header */}
-        <header className="container mx-auto px-4 py-4 flex justify-end items-center gap-4">
+        <header className="container mx-auto px-4 py-4 flex justify-between items-center gap-4">
+        {/* Logo on the left */}
+        <div>
+          <img 
+            src="/logoindex2.png" 
+            alt="My App Logo" 
+            className="h-14 w-auto" 
+          />
+        </div>
+
+        {/* Dropdown menu on the right */}
+        <div className="flex items-center gap-4">
           {user ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors">
+              <DropdownMenuTrigger className="flex items-center gap-2 px-4 py-2 h-10 rounded-full bg-white/50 hover:bg-white/80 transition-colors">
                 <User className="w-4 h-4" />
                 <span className="hidden sm:inline">{user.email}</span>
               </DropdownMenuTrigger>
@@ -113,7 +124,9 @@ const Index = () => {
               </Link>
             </>
           )}
-        </header>
+        </div>
+      </header>
+
 
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-12 md:py-20">
