@@ -51,7 +51,7 @@ export default function Plan() {
       return;
     }
     try {
-      const response = await fetch("https://api.brainrepo.es/create-portal-session", {
+      const response = await fetch("https://api.brainrepo.es/create-portal-session", { //http://localhost:8000/create-portal-session
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export default function Plan() {
       description: "Get 30 summaries per month",
       features: ["30 summaries per month"],
       featured: true,
-      paymentLink: "https://buy.stripe.com/eVaaIafyhckogeY3cc",
+      paymentLink: "https://buy.stripe.com/3cs2bEfyhfwA7Is5kn",
     },
     {
       name: "Legend",
@@ -91,7 +91,7 @@ export default function Plan() {
       description: "",
       features: ["Unlimited summaries"],
       featured: false,
-      paymentLink: "https://buy.stripe.com/28o17Aeud98ce6QaEF",
+      paymentLink: "https://buy.stripe.com/cN27vY2LvgAEbYIbIK",
     },
   ];
 
