@@ -5,6 +5,21 @@
   text-align: center;
 }
 
+
+.diagonal-strike::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Adjust thickness as needed */
+  background-color: red; /* The color of the diagonal line */
+  transform: rotate(-45deg);
+  transform-origin: center;
+  pointer-events: none; /* So it doesn't block clicks */
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;

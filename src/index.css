@@ -23,6 +23,19 @@
   }
 }
 
+.diagonal-strike::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 110%;
+  height: 2px; /* Adjust thickness as needed */
+  background-color: red; /* The color of the diagonal line */
+  transform: rotate(-15deg);
+  transform-origin: center;
+  pointer-events: none; /* So it doesn't block clicks */
+}
+
 .glass-card {
   @apply bg-white/70 backdrop-blur-md border border-primary/10 shadow-lg;
 }
