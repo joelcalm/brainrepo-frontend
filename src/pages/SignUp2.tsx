@@ -1,4 +1,4 @@
-// src/pages/Signup2.tsx
+// src/pages/SignUp2.tsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -25,7 +25,11 @@ export default function SignUp2() {
   const [loading, setLoading] = useState(false);
 
   // For POST call to your FastAPI with name included
-  const savePlaylist = async (userEmail: string, url: string, userName: string) => {
+  const savePlaylist = async (
+    userEmail: string,
+    url: string,
+    userName: string
+  ) => {
     const response = await fetch("https://api.brainrepo.es/save-playlist", {
       method: "POST",
       headers: {
@@ -49,7 +53,11 @@ export default function SignUp2() {
     setLoading(true);
 
     try {
-      const userCred = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      const userCred = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
       const currentUser = userCred.user;
 
       // If the user typed a playlist URL on the homepage, store it
@@ -59,8 +67,16 @@ export default function SignUp2() {
 
       navigate("/start");
     } catch (error: any) {
-      alert("Sign up error: " + error.message);
-      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
+        alert(
+          "Email already in use. Please log in or use another email."
+        );
+        // Redirect to login2, preserving the playlistUrl
+        navigate("/login2", { state: { playlistUrl, email } });
+      } else {
+        alert("Sign up error: " + error.message);
+        console.error(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -103,7 +119,9 @@ export default function SignUp2() {
         </Link>
 
         <div className="glass-card rounded-2xl p-8">
-          <h2 className="text-2xl font-bold mb-6">Where should we send the summaries?</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            Where should we send the summaries?
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">Name</label>
@@ -117,7 +135,9 @@ export default function SignUp2() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Email address</label>
+              <label className="block text-sm font-medium mb-2">
+                Email address
+              </label>
               <input
                 type="email"
                 value={email}
@@ -152,7 +172,9 @@ export default function SignUp2() {
                 <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
               </div>
             </div>
 
@@ -162,7 +184,6 @@ export default function SignUp2() {
               disabled={loading}
               className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
             >
-              {/* Google Icon */}
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 
